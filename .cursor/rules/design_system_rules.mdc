@@ -1,0 +1,83 @@
+## Design System Rules (HumanBacked)
+
+Use this as the source of truth when translating Figma into code in this repo.
+
+### Stack & Project Shape
+- Framework: Next.js 16 (App Router), React 19.
+- Styling: Tailwind CSS v4 (utility-first) with `@theme inline` for tokens, plus a few root CSS custom properties.
+- Fonts: `next/font/local` loads Poppins weights 400/500/600/700 and exposes `--font-poppins`.
+- Structure: `app/` uses the App Router; `app/layout.tsx` sets html/body wrappers and global font; `app/page.tsx` holds the landing page; assets live under `public/`.
+
+### Tokens & Theming
+- Location: `app/globals.css`.
+- Defined tokens:
+  - CSS custom props: `--background`, `--foreground`, swapped via `prefers-color-scheme`.
+  - Tailwind theme bridge: `@theme inline` maps `--color-background`, `--color-foreground`, and `--font-sans` to those variables.
+  - Fonts: `--font-poppins` injected by `next/font/local` in `app/layout.tsx`.
+- How to add tokens:
+  - Prefer `@theme inline` for Tailwind-aware tokens, keeping names semantic (e.g., `--color-surface`, `--radius-sm`, `--space-4`).
+  - Keep raw CSS vars in `:root` (and optional dark mode overrides) to allow non-Tailwind contexts to reuse them.
+- Example extension:
+```css
+@theme inline {
+  --color-surface: #0f172a;
+  --radius-md: 12px;
+  --space-4: 1rem;
+  --shadow-card: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+```
+
+### Colors
+- Current: `--background`/`--foreground` only, with dark-mode swap in `prefers-color-scheme`.
+- Guidance:
+  - Add semantic layers: `surface`, `muted`, `border`, `accent`, `accent-foreground`, `success`, `warning`, `danger`.
+  - Keep contrast: target WCAG AA for text over backgrounds.
+  - Mirror tokens into Tailwind (`--color-*`) so utilities (e.g., `bg-surface`, `text-accent`) can be used consistently.
+
+### Typography
+- Source: Poppins via `next/font/local` (`app/layout.tsx`).
+- Globals: body uses `var(--font-poppins)` with `antialiased`.
+- Guidance:
+  - Define `--font-heading`, `--font-body` if you introduce secondary families.
+  - Add size/line-height tokens in `@theme inline` (e.g., `--text-sm: 0.875rem 1.4` using Tailwind v4 paired tokens syntax if desired).
+
+### Layout & Spacing
+- No spacing/radius tokens yet; Tailwind defaults available.
+- Guidance:
+  - Introduce spacing scale tokens (`--space-1/2/3...`) when Figma spacing is finalized.
+  - For rounded shapes, add `--radius-sm/md/lg/full` and use Tailwind utilities bound to them via `@theme inline`.
+
+### Components
+- No shared component library yet; `app/page.tsx` is minimal.
+- Preferred pattern:
+  - Create reusable components under `app/components/` (server components by default; add `"use client"` only when interactive).
+  - Style via Tailwind utilities; for repeated patterns, extract small helper components instead of heavy wrappers.
+  - Keep props typed with TypeScript and avoid default exports for shared components where clarity matters.
+
+### Styling Approach
+- Use Tailwind utilities for layout, spacing, typography, and color.
+- Use CSS custom properties for theming; avoid inline style objects for theme-critical values.
+- Global styles live in `app/globals.css`; keep them minimal (resets, base typography).
+- Responsive: rely on Tailwind breakpoints; align breakpoint usage with Figma responsive specs.
+
+### Assets & Icons
+- Assets: place in `public/`; reference with absolute `/...` paths in Next.js.
+- Icons: none standardized yet. Prefer an `icons/` folder under `public/` or a dedicated React icon set; name icons with lowercase-kebab matching Figma node names (e.g., `icon/user-check.svg`).
+- Optimize SVGs (SVGO) before adding; keep viewBox intact for sizing via CSS.
+
+### Layout Shell
+- `app/layout.tsx` sets `<html lang="en" className="h-full bg-slate-950 text-slate-50">` and applies the Poppins variable plus `antialiased` on `<body>`.
+- Keep page-level backgrounds and text colors consistent with theme tokens; avoid hardcoded colors in layout once more tokens exist.
+
+### Figma → Code Mapping Guidance
+- Map Figma color tokens to CSS vars in `:root`, then mirror into `@theme inline` so Tailwind utilities can consume them.
+- Map typography styles to tokenized sizes/weights; avoid per-component ad-hoc font sizing.
+- Convert spacers/paddings to the shared spacing scale; do not hardcode pixel values unless the design intentionally calls for it.
+- Components in Figma should correspond to React components under `app/components`; match naming (e.g., `Button/Primary` → `app/components/ButtonPrimary.tsx` or `Button.tsx` with a `variant` prop).
+- For images from Figma, export to `public/` and import via Next `Image` when aspect ratios matter; otherwise `img` with `/path` is acceptable for simple assets.
+- Document any new token additions in this file when you introduce them, so design and code stay aligned.
+
+### Quality & Accessibility
+- Maintain color contrast; verify against background tokens.
+- Include focus states for interactive elements; use tokenized outlines/shadows.
+- Use semantic HTML; prefer server components unless client interactivity is needed.
