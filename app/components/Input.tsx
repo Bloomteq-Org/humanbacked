@@ -1,6 +1,26 @@
-const Input = () => {
+type InputProps = {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  hasError?: boolean;
+};
+
+const Input = ({
+  value,
+  onChange,
+  placeholder = "Enter your email",
+  disabled = false,
+  hasError = false,
+}: InputProps) => {
+  const borderClasses = hasError
+    ? "border-[#d92d20] focus-within:border-[#d92d20]"
+    : "border-[#C7C7C6] focus-within:border-[#0c3ddf]";
+
   return (
-    <div className="max-w-[600px] w-full px-[24px] flex items-center gap-[10px] py-[11px] rounded-full border border-[#C7C7C6] bg-white transition-colors focus-within:border-[#0c3ddf]">
+    <div
+      className={`max-w-[600px] w-full px-[24px] flex items-center gap-[10px] py-[11px] rounded-full border bg-white transition-colors ${borderClasses}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="22"
@@ -17,9 +37,14 @@ const Input = () => {
         />
       </svg>
       <input
-        type="text"
-        placeholder="Enter your email"
-        className="w-full font-poppins outline-none h-full text-[#7B7B78] placeholder:text-[#7B7B78]/40 placeholder:text-[17px] leading-[26px] font-medium"
+        type="email"
+        inputMode="email"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        aria-invalid={hasError}
+        className="w-full font-poppins outline-none h-full text-[#7B7B78] placeholder:text-[#7B7B78]/40 placeholder:text-[17px] leading-[26px] font-medium disabled:text-[#7B7B78]/60"
       />
     </div>
   );

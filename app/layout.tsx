@@ -34,12 +34,27 @@ export const metadata: Metadata = {
     "HumanBacked is building the trust layer for the AI era, where verified creators can be trusted, celebrated, and financially rewarded for real human content.",
   keywords: [
     "HumanBacked",
-    "Next.js landing page",
-    "server side rendering",
-    "Tailwind CSS",
-    "Vercel",
-    "lead capture",
+    "trust layer",
+    "AI era",
+    "verified creators",
+    "identity",
+    "content authenticity",
+    "waitlist",
   ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "HumanBacked | Trust Layer for Real Humans",
     description:
@@ -47,12 +62,21 @@ export const metadata: Metadata = {
     url: "https://humanbacked.vercel.app",
     siteName: "HumanBacked",
     type: "website",
+    images: [
+      {
+        url: "/LogoV2.svg",
+        width: 1200,
+        height: 630,
+        alt: "HumanBacked | Trust Layer for Real Humans",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "HumanBacked | In a world filled with digital voices and faces, being human matters.",
     description:
       "HumanBacked is building the trust layer for the AI era, where verified creators can be trusted, celebrated, and financially rewarded for real human content.",
+    images: ["/LogoV2.svg"],
   },
 };
 

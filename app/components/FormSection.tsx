@@ -1,15 +1,54 @@
 "use client";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, type FormEvent, useCallback } from "react";
+import Button from "./Button";
 import Input from "./Input";
 
 const FormSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
   const gradientText = "bg-clip-text text-transparent bg-gradient-to-r from-[#0c3ddf] to-[#b748be]";
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  const isValidEmail = useCallback((value: string) => {
+    // Basic-but-strict email pattern: no spaces, single "@", domain with TLD.
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    return emailPattern.test(value.trim());
+  }, []);
+
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+    if (status === "error") {
+      setStatus("idle");
+      setMessage("");
+    }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!isValidEmail(email)) {
+      setStatus("error");
+      setMessage("Please enter a valid email address.");
+      return;
+    }
+
+    setStatus("loading");
+    setMessage("");
+
+    // Placeholder for real submit (API / email provider).
+    setTimeout(() => {
+      setStatus("success");
+      setMessage("Thanks! You're on the waitlist.");
+      setEmail("");
+    }, 800);
+  };
 
   return (
     <section
+      id="join-the-waitlist"
       ref={sectionRef}
       className={`relative flex w-full flex-col pt-[40px] pb-[64px] gap-[8px] mx-auto max-w-[1512px] px-[16px] md:px-[24px] lg:px-[86px] xl:px-[126px]`}
     >
@@ -70,13 +109,44 @@ lg:text-[#1D1D1B] lg:text-center  lg:text-[22px] lg:font-medium lg:leading-[34px
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-        className="flex items-center flex-col justify-center w-full pt-[24px] lg:pt-[39px] gap-[8px]"
+        className="flex items-center flex-col justify-center w-full pt-[24px] lg:pt-[39px] gap-[12px]"
       >
-        <Input />
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center gap-[12px] w-full max-w-[600px]"
+        >
+          <Input
+            value={email}
+            onChange={handleEmailChange}
+            disabled={status === "loading"}
+            hasError={status === "error"}
+          />
+          <Button
+            type="submit"
+            size="lg"
+            // fullWidth
+            aria-label="Join the waitlist"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "Sending..." : "Join the Waitlist"}
+          </Button>
+        </form>
 
-        <p className="font-roboto text-[#1D1D1B] text-[16px] font-medium leading-[20px]">
-          No spam, just human updates that matter.
-        </p>
+        {message && (
+          <p
+            className={`font-roboto text-[16px] font-medium leading-[20px] ${
+              status === "success" ? "text-[#0c3ddf]" : "text-[#d92d20]"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+
+        {!message && (
+          <p className="font-roboto text-[#1D1D1B] text-[16px] font-medium leading-[20px]">
+            No spam, just human updates that matter.
+          </p>
+        )}
       </motion.div>
     </section>
   );
