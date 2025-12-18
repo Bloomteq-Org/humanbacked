@@ -1,6 +1,7 @@
 "use client";
 import { Poppins } from "next/font/google";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 type CountdownItem = {
   value: string | number;
@@ -54,44 +55,56 @@ const getParts = (targetMs: number): TimeParts => {
   return { days, hours, minutes, seconds };
 };
 
+const Countdown = ({ items, className, targetDate }: CountdownProps) => {
+  const [mounted, setMounted] = useState(false);
 
-const Countdown = ({
-  items,
-  className,
-  targetDate,
-}: CountdownProps) => {
   const fallbackTargetMs = useMemo(() => {
     // Default matches the design preview: 118d 17h 56m 32s from now.
+    // Only calculate on client to avoid hydration mismatch
+    if (typeof window === "undefined") return NaN;
     const seconds = ((118 * 24 + 17) * 60 + 56) * 60 + 32;
     return Date.now() + seconds * 1000;
   }, []);
 
   const targetMs = useMemo(() => {
+    if (!mounted) return NaN;
     const parsed = parseTargetMs(targetDate);
     return Number.isFinite(parsed) ? parsed : fallbackTargetMs;
-  }, [fallbackTargetMs, targetDate]);
+  }, [mounted, fallbackTargetMs, targetDate]);
 
-  const [timeParts, setTimeParts] = useState<TimeParts>(() =>
-    getParts(targetMs),
-  );
+  // Initialize with zeros to avoid hydration mismatch
+  const [timeParts, setTimeParts] = useState<TimeParts>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
   useEffect(() => {
-    setTimeParts(getParts(targetMs));
-    const timer = setInterval(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || !Number.isFinite(targetMs)) return;
+
+    const updateTime = () => {
       const next = getParts(targetMs);
       setTimeParts(next);
-      if (
-        next.days === 0 &&
-        next.hours === 0 &&
-        next.minutes === 0 &&
-        next.seconds === 0
-      ) {
+      return next;
+    };
+
+    // Set initial time immediately
+    updateTime();
+
+    const timer = setInterval(() => {
+      const next = updateTime();
+      if (next.days === 0 && next.hours === 0 && next.minutes === 0 && next.seconds === 0) {
         clearInterval(timer);
       }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetMs]);
+  }, [mounted, targetMs]);
 
   const liveItems: CountdownItem[] = [
     { value: timeParts.days, label: "DAYS" },
@@ -100,28 +113,50 @@ const Countdown = ({
     { value: timeParts.seconds, label: "SECONDS" },
   ];
 
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.3 });
+
   const containerClass = [
-    "flex items-center justify-center gap-[12px] rounded-[20px] px-[16px] py-[10px]",
+    "flex items-center justify-center gap-[12px] rounded-[20px] px-[16px]",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <div
-      className={containerClass}
-      data-name="Counter"
-      data-node-id="1:1198"
-    >
-      {(items ?? liveItems).map((item) => (
-        <div
-          key={`${item.label}-${item.value}`}
-          className="flex h-[72px] w-[72px] shrink-0 flex-col items-center justify-end gap-[4px] rounded-[16px] border border-[#f5e3f6] bg-white pb-[12px]"
+    <div ref={containerRef} className={containerClass} data-name="Counter" data-node-id="1:1198">
+      {(items ?? liveItems).map((item, index) => (
+        <motion.div
+          key={item.label}
+          initial={{ opacity: 0, scale: 0.5, y: 30 }}
+          animate={
+            isInView
+              ? {
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                }
+              : {
+                  opacity: 0,
+                  scale: 0.5,
+                  y: 30,
+                }
+          }
+          whileHover={{
+            scale: 1.05,
+            transition: { duration: 0.2 },
+          }}
+          transition={{
+            opacity: { duration: 0.5, delay: index * 0.1, ease: [0.4, 0, 0.2, 1] },
+            scale: { duration: 0.6, delay: index * 0.1, ease: [0.34, 1.56, 0.64, 1] },
+            y: { duration: 0.6, delay: index * 0.1, ease: [0.34, 1.56, 0.64, 1] },
+          }}
+          className="flex h-[72px] w-[72px] md:w-[90px] md:h-[90px] shrink-0 flex-col items-center justify-end gap-[4px] rounded-[16px] border border-[#f5e3f6] bg-white pb-[12px]"
         >
           <p
             className={[
-              "bg-gradient-to-b from-[#3d7eff] to-[#b12cdf] bg-clip-text text-transparent",
-              "text-[28px] leading-[36px] tracking-[0.28px]",
+              "bg-gradient-to-r from-[#0C3DDF] to-[#B748BE] bg-clip-text text-transparent",
+              "text-[28px] md:text-[40px] md:leading-[48px] md:-tracking-[0.8px] leading-[36px] tracking-[0.28px]",
               "font-bold",
               poppins.className,
             ].join(" ")}
@@ -137,11 +172,10 @@ const Countdown = ({
           >
             {item.label}
           </p>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
 };
 
 export default Countdown;
-

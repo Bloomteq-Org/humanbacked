@@ -15,7 +15,7 @@
   --space-6: 32px;
   --space-9: 64px;
   --grid-margin-110: 110px;
-  --font-body: "Roboto", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+  --font-body: "Poppins", "Roboto", "Inter", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   --font-heading: var(--font-poppins);
 }
@@ -36,8 +36,8 @@
   --space-9: var(--space-9);
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -48,7 +48,6 @@
 }
 
 body {
-  background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-body);
 }

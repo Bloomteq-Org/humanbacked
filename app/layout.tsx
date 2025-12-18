@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
 const poppins = localFont({
@@ -15,11 +16,18 @@ const poppins = localFont({
   ],
 });
 
+const roboto = Roboto({
+  variable: "--font-roboto",
+  display: "swap",
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  fallback: ["Inter", "system-ui", "sans-serif"],
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://humanbacked.vercel.app"),
   title: {
-    default:
-      "HumanBacked – In a world filled with digital voices and faces, being human matters",
+    default: "HumanBacked – In a world filled with digital voices and faces, being human matters",
     template: "%s | HumanBacked",
   },
   description:
@@ -42,8 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "HumanBacked | In a world filled with digital voices and faces, being human matters.",
+    title: "HumanBacked | In a world filled with digital voices and faces, being human matters.",
     description:
       "HumanBacked is building the trust layer for the AI era, where verified creators can be trusted, celebrated, and financially rewarded for real human content.",
   },
@@ -55,8 +62,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full bg-white">
-      <body className={`${poppins.variable} antialiased  h-full`}>
+    <html
+      lang="en"
+      className="bg-[radial-gradient(118.69%_85.24%_at_50%_25.2%,_#F4F4FF_0%,_#FFF_58.08%,_#F4F4FF_84.05%)]"
+    >
+      <body className={`${poppins.variable} ${roboto.variable} antialiased  h-full`}>
         {children}
       </body>
     </html>
