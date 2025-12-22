@@ -7,41 +7,35 @@ import Image from "next/image";
 import instagram from "../images/instagram.svg";
 import facebook from "../images/facebook.svg";
 import x from "../images/x.svg";
-import reddit from "../images/reddit.svg";
-import discord from "../images/discord.svg";
 import linkedin from "../images/linkedin.svg";
+import tiktok from "../images/tiktok.svg";
 import Link from "next/link";
 
 const socialMedia = [
   {
+    name: "LinkedIn",
+    icon: linkedin,
+    url: "https://www.linkedin.com/company/humanbacked",
+  },
+  {
     name: "Instagram",
     icon: instagram,
-    url: "https://www.instagram.com",
+    url: "https://www.instagram.com/humanbacked/",
+  },
+  {
+    name: "TikTok",
+    icon: tiktok,
+    url: "https://www.tiktok.com/@humanbacked",
+  },
+  {
+    name: "Twitter",
+    icon: x,
+    url: "https://x.com/HumanBacked",
   },
   {
     name: "Facebook",
     icon: facebook,
-    url: "https://www.facebook.com",
-  },
-  {
-    name: "X",
-    icon: x,
-    url: "https://www.x.com",
-  },
-  {
-    name: "Reddit",
-    icon: reddit,
-    url: "https://www.reddit.com",
-  },
-  {
-    name: "Discord",
-    icon: discord,
-    url: "https://www.discord.com",
-  },
-  {
-    name: "LinkedIn",
-    icon: linkedin,
-    url: "https://www.linkedin.com",
+    url: "https://www.facebook.com/humanbacked/",
   },
 ];
 const Footer = () => {
@@ -115,7 +109,7 @@ const Footer = () => {
         transition={{ duration: 0.5, delay: 0.3, ease: [0.4, 0, 0.2, 1] }}
       >
         <Link
-          href="/privacy-policy"
+          href="/terms"
           className="text-white text-[14px] leading-[22px] hover:underline hover:opacity-90 font-normal font-roboto"
         >
           Terms & Conditions

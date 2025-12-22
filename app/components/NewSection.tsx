@@ -6,6 +6,7 @@ import phone1 from "../images/iPhone-13-Pro-Front.png";
 import phone2 from "../images/iPhone-13-Pro-Front2.png";
 import phone3 from "../images/iPhone-13-Pro-Front3.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const NewSection = () => {
   const sectionRef = useRef(null);
@@ -82,14 +83,21 @@ const NewSection = () => {
                 transition={{ duration: 0.6, delay: 0.26, ease: [0.4, 0, 0.2, 1] }}
                 className="flex flex-col  sm:gap-[16px] flex-col gap-[10px] text-center lg:text-left"
               >
-                <a className="inline-flex hover:translate-x-1 transition-all duration-300 cursor-pointer sm:justify-start gap-[8px] text-[#1D1D1B] font-medium text-[16px] leading-[22px] md:text-[16px] md:leading-[24px]">
+                <Link
+                  target="_blank"
+                  href="/white-paper"
+                  className="inline-flex hover:translate-x-1 transition-all duration-300 cursor-pointer sm:justify-start gap-[8px] text-[#1D1D1B] font-medium text-[16px] leading-[22px] md:text-[16px] md:leading-[24px]"
+                >
                   <span>Read our white-paper</span>
                   <span aria-hidden>→</span>
-                </a>
-                <a className="inline-flex  hover:translate-x-1 transition-all duration-300 cursor-pointer sm:justify-start gap-[8px] text-[#1D1D1B] font-medium text-[16px] leading-[22px] md:text-[16px] md:leading-[24px]">
+                </Link>
+                <Link
+                  href="mailto:info@humanbacked.com"
+                  className="inline-flex  hover:translate-x-1 transition-all duration-300 cursor-pointer sm:justify-start gap-[8px] text-[#1D1D1B] font-medium text-[16px] leading-[22px] md:text-[16px] md:leading-[24px]"
+                >
                   <span>Ask how you can help</span>
                   <span aria-hidden>→</span>
-                </a>
+                </Link>
               </motion.div>
             </div>
 
