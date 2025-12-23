@@ -51,7 +51,9 @@ const FormSection = () => {
 
       if (data.success) {
         setStatus("success");
-        setMessage(data.message || "Thanks! You're on the waitlist. Check your email for confirmation.");
+        setMessage(
+          data.message || "Thanks! You're on the waitlist. Check your email for confirmation.",
+        );
         setEmail("");
       } else {
         setStatus("error");
@@ -68,6 +70,7 @@ const FormSection = () => {
       id="join-the-waitlist"
       ref={sectionRef}
       className={`relative flex w-full flex-col pt-[40px] pb-[64px] gap-[8px] mx-auto max-w-[1512px] px-[16px] md:px-[24px] lg:px-[86px] xl:px-[126px]`}
+      style={{ scrollMarginTop: "20px" }}
     >
       <div className="flex items-center justify-center">
         <svg

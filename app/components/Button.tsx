@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import React from "react";
 
 type CommonProps = {
   label?: string;
@@ -62,9 +63,33 @@ const Button = (props: ButtonProps) => {
   const content = children ?? label;
 
   if ("href" in rest && rest.href) {
-    const { href, target, rel, ...linkProps } = rest as ButtonAsLinkProps;
+    const { href, target, rel, onClick, ...linkProps } = rest as ButtonAsLinkProps;
+
+    // Handle hash links with smooth scroll for iOS compatibility
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (onClick) {
+        onClick(e);
+      }
+
+      // If it's a hash link, handle smooth scroll manually for iOS
+      if (href.startsWith("#") && !e.defaultPrevented) {
+        e.preventDefault();
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    };
+
     return (
-      <Link href={href} target={target} rel={rel} className={classNames} {...linkProps}>
+      <Link
+        href={href}
+        target={target}
+        rel={rel}
+        className={classNames}
+        onClick={handleClick}
+        {...linkProps}
+      >
         {content}
       </Link>
     );

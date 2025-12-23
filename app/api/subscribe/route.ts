@@ -14,7 +14,7 @@ const getEmailHtml = () => `
         <!-- Logo centered on top -->
         <div style="margin-bottom: 32px; text-align: center;">
           <img 
-            src="https://wnm9vp5xvsjdmdmf.public.blob.vercel-storage.com/logo.svg" 
+            src="https://wnm9vp5xvsjdmdmf.public.blob.vercel-storage.com/Left%20Block.png" 
             alt="HumanBacked" 
             width="165" 
             height="22" 

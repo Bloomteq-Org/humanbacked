@@ -56,7 +56,7 @@ const HeroCounterDescription = ({
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.4, ease: [0.4, 0, 0.2, 1] }}
       >
-        <Button className="xl:hidden" label="Join Our Waitlist" size="lg" />
+        <Button href="#join-the-waitlist" className="xl:hidden" label="Join Our Waitlist" size="lg" />
       </motion.div>
     </section>
   );

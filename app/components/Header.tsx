@@ -80,7 +80,7 @@ const Header = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
           >
-            <Button href="/#join-the-waitlist" label="Join Our Waitlist" size="lg" />
+            <Button href="#join-the-waitlist" label="Join Our Waitlist" size="lg" />
           </motion.div>
         </div>
         <motion.div
