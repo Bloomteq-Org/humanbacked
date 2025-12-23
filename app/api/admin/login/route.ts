@@ -7,8 +7,17 @@ export async function POST(request: NextRequest) {
     const { username, password } = body;
 
     // Get credentials from environment variables
-    const adminUsername = process.env.ADMIN_USERNAME || "admin";
-    const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+
+    // If credentials are not set, reject login
+    if (!adminUsername || !adminPassword) {
+      console.error("Admin credentials not configured in environment variables");
+      return NextResponse.json(
+        { success: false, error: "Admin access not configured" },
+        { status: 500 },
+      );
+    }
 
     // Validate credentials
     if (username === adminUsername && password === adminPassword) {
