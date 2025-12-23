@@ -88,10 +88,12 @@ const ImageMarquee = ({
             <Image
               src={src}
               alt={`Marquee image ${index + 1}`}
-              width={200}
-              height={200}
+              width={400}
+              height={400}
               className="object-cover object-top w-full h-full"
-              unoptimized
+              sizes="(max-width: 1280px) 320px, 400px"
+              loading="lazy"
+              quality={75}
             />
           </motion.div>
         ))}

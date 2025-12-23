@@ -15,7 +15,7 @@ const NewSection = () => {
   const phoneFrames = [
     {
       key: "phone-1",
-      imageSrc: phone1.src,
+      imageSrc: phone1,
       left: "1%",
       rotate: -6.412,
       top: "-3%",
@@ -23,14 +23,14 @@ const NewSection = () => {
     },
     {
       key: "phone-2",
-      imageSrc: phone2.src,
+      imageSrc: phone2,
       left: "21%",
       rotate: 3.809,
       top: "0%",
     },
     {
       key: "phone-3",
-      imageSrc: phone3.src,
+      imageSrc: phone3,
       left: "37%",
       rotate: 12.65,
       top: "5%",
@@ -127,15 +127,17 @@ const NewSection = () => {
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.8, delay: 0.12 * index, ease: [0.4, 0, 0.2, 1] }}
                 >
-                  <div
-                    className=" w-full h-full relative"
-                    style={{
-                      backgroundImage: `url(${phone.imageSrc})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      backgroundRepeat: "no-repeat",
-                    }}
-                  ></div>
+                  <div className="w-full h-full relative">
+                    <Image
+                      src={phone.imageSrc}
+                      alt={`Phone frame ${phone.key}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 144px, 235px"
+                      loading="lazy"
+                      quality={75}
+                    />
+                  </div>
                 </motion.div>
               ))}
             </div>
