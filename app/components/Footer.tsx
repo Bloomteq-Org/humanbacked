@@ -122,14 +122,6 @@ const Footer = () => {
         >
           Privacy Policy
         </Link>
-        <div className="h-[2px] w-[2px] bg-[#22C55E] rounded-full" />
-
-        <Link
-          href="/privacy-policy"
-          className="text-white text-[14px] hover:underline hover:opacity-90 transition-colors duration-200 leading-[22px] font-normal font-roboto"
-        >
-          Cookies
-        </Link>
       </motion.div>
     </footer>
   );

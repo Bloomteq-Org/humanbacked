@@ -159,7 +159,7 @@ const RealSection = () => {
 lg:text-[#1D1D1B] lg:text-center lg:text-[40px] lg:font-semibold lg:leading-[48px]
 `}
         >
-          <span>The internet Forgot</span> <span className={gradientText}>What's Real.</span>
+          <span>The Internet Forgot</span> <span className={gradientText}>What's Real.</span>
         </motion.h2>
 
         <motion.p

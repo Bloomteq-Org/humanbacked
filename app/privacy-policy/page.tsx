@@ -1,5 +1,34 @@
+import type { Metadata } from "next";
 import SimpleHeader from "../components/SimpleHeader";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Privacy Policy for HumanBacked. Learn how we collect, use, and protect your personal data. Effective date: December 1, 2025. GDPR compliant.",
+  keywords: [
+    "HumanBacked privacy policy",
+    "data protection",
+    "GDPR",
+    "privacy",
+    "data security",
+    "personal data",
+  ],
+  alternates: {
+    canonical: "/privacy-policy",
+  },
+  openGraph: {
+    title: "Privacy Policy | HumanBacked",
+    description:
+      "Privacy Policy for HumanBacked. Learn how we collect, use, and protect your personal data. GDPR compliant.",
+    url: "https://humanbacked.vercel.app/privacy-policy",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function PrivacyPolicyPage() {
   return (

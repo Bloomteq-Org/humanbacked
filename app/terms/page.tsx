@@ -1,5 +1,33 @@
+import type { Metadata } from "next";
 import SimpleHeader from "../components/SimpleHeader";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Terms and Conditions",
+  description:
+    "Terms and Conditions for HumanBacked. Read our terms of service, intellectual property rights, and user agreements. Effective date: December 1, 2025.",
+  keywords: [
+    "HumanBacked terms",
+    "terms and conditions",
+    "terms of service",
+    "user agreement",
+    "legal terms",
+  ],
+  alternates: {
+    canonical: "/terms",
+  },
+  openGraph: {
+    title: "Terms and Conditions | HumanBacked",
+    description:
+      "Terms and Conditions for HumanBacked. Read our terms of service, intellectual property rights, and user agreements.",
+    url: "https://humanbacked.vercel.app/terms",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function TermsPage() {
   return (

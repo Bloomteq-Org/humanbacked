@@ -77,7 +77,8 @@ lg:text-[#1D1D1B] lg:text-center  lg:text-[22px] lg:font-medium lg:leading-[34px
         >
           A global standard for Proof of Personhood – simple, ethical, verifiable. <br /> Creators
           who verify their identity can connect with brands, receive gifts, and get paid for genuine
-          work.Built with biometric verification, blockchain records, and transparent certification.
+          work. Built with biometric verification, blockchain records, and transparent
+          certification.
         </motion.p>
       </div>
 

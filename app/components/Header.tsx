@@ -67,7 +67,7 @@ const Header = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
           >
-            <Countdown className="" targetDate={new Date("2026-10-18T23:59:59Z")} />
+            <Countdown className="" targetDate={new Date("2026-03-01T00:00:00Z")} />
           </motion.div>
           <motion.div
             className="hidden xl:block"

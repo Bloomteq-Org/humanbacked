@@ -35,7 +35,7 @@ const variantClasses: Record<NonNullable<ButtonProps["variant"]>, string> = {
   gradient:
     "bg-gradient-to-r from-[#0c3ddf] to-[#b748be] text-white  hover:brightness-[1.04] active:scale-[0.99] focus-visible:outline-[#0c3ddf]",
   ghost:
-    "border border-white/60 bg-white text-[#1d1d1b] hover:bg-white/90 active:scale-[0.99] focus-visible:outline-[#0c3ddf]",
+    "border border-gray-400 bg-white text-[#1d1d1b] hover:bg-gray-100 active:scale-[0.99] focus-visible:outline-[#0c3ddf]",
 };
 
 const Button = (props: ButtonProps) => {

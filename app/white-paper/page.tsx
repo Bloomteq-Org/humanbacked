@@ -1,7 +1,55 @@
+import type { Metadata } from "next";
 import SimpleHeader from "../components/SimpleHeader";
 import Footer from "../components/Footer";
 import Link from "next/link";
 import FormSection from "../components/FormSection";
+
+export const metadata: Metadata = {
+  title: "White Paper",
+  description:
+    "HumanBacked White Paper: Proof of Personhood + Verified Support for the AI Era. Learn how HumanBacked is building the trust layer for creators in the age of AI-generated content.",
+  keywords: [
+    "HumanBacked white paper",
+    "proof of personhood",
+    "verified support",
+    "AI era",
+    "creator verification",
+    "trust layer",
+    "content authenticity",
+    "deepfake protection",
+    "creator economy",
+    "identity verification",
+  ],
+  alternates: {
+    canonical: "/white-paper",
+  },
+  openGraph: {
+    title: "HumanBacked White Paper | Proof of Personhood + Verified Support",
+    description:
+      "HumanBacked White Paper: Proof of Personhood + Verified Support for the AI Era. Learn how HumanBacked is building the trust layer for creators.",
+    url: "https://humanbacked.vercel.app/white-paper",
+    type: "website",
+    images: [
+      {
+        url: "/LogoV2.svg",
+        width: 1200,
+        height: 630,
+        alt: "HumanBacked White Paper",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "HumanBacked White Paper | Proof of Personhood + Verified Support",
+    description:
+      "Learn how HumanBacked is building the trust layer for creators in the age of AI-generated content.",
+    images: ["/LogoV2.svg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function WhitePaperPage() {
   return (
