@@ -1,5 +1,4 @@
 "use client";
-import { Poppins } from "next/font/google";
 import { useEffect, useMemo, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
@@ -17,12 +16,6 @@ type CountdownProps = {
    */
   targetDate?: Date | string | number;
 };
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["500", "700"],
-  display: "swap",
-});
 
 type TimeParts = {
   days: number;
@@ -157,8 +150,7 @@ const Countdown = ({ items, className, targetDate }: CountdownProps) => {
             className={[
               "bg-gradient-to-r from-[#0C3DDF] to-[#B748BE] bg-clip-text text-transparent",
               "text-[28px] md:text-[40px] md:leading-[48px] md:-tracking-[0.8px] leading-[36px] tracking-[0.28px]",
-              "font-bold",
-              poppins.className,
+              "font-bold font-poppins",
             ].join(" ")}
           >
             {item.value}
@@ -166,8 +158,7 @@ const Countdown = ({ items, className, targetDate }: CountdownProps) => {
           <p
             className={[
               "text-[10px] leading-[10px] tracking-[0.28px] text-[#1d1d1b]",
-              "font-medium uppercase",
-              poppins.className,
+              "font-medium uppercase font-poppins",
             ].join(" ")}
           >
             {item.label}
