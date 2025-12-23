@@ -26,7 +26,7 @@ const FormSection = () => {
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isValidEmail(email)) {
@@ -38,12 +38,29 @@ const FormSection = () => {
     setStatus("loading");
     setMessage("");
 
-    // Placeholder for real submit (API / email provider).
-    setTimeout(() => {
-      setStatus("success");
-      setMessage("Thanks! You're on the waitlist.");
-      setEmail("");
-    }, 800);
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("success");
+        setMessage(data.message || "Thanks! You're on the waitlist. Check your email for confirmation.");
+        setEmail("");
+      } else {
+        setStatus("error");
+        setMessage(data.error || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      setStatus("error");
+      setMessage("Something went wrong. Please try again.");
+    }
   };
 
   return (

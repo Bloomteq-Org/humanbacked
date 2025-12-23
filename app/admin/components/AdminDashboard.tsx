@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../../components/Button";
 
@@ -13,46 +13,37 @@ interface EmailData {
   createdAt: string;
 }
 
-// Dummy email list - will be replaced with API call later
-const generateDummyEmails = (): EmailData[] => {
-  const baseEmails = [
-    "john.doe@example.com",
-    "jane.smith@example.com",
-    "bob.johnson@example.com",
-    "alice.williams@example.com",
-    "charlie.brown@example.com",
-    "diana.prince@example.com",
-    "frank.miller@example.com",
-    "grace.hopper@example.com",
-    "henry.ford@example.com",
-    "ivy.league@example.com",
-  ];
-
-  // Generate emails with random dates in the last 30 days
-  const emails: EmailData[] = [];
-  const now = Date.now();
-  const thirtyDaysAgo = now - 30 * 24 * 60 * 60 * 1000;
-
-  for (let i = 0; i < 20; i++) {
-    const randomTime = Math.random() * (now - thirtyDaysAgo) + thirtyDaysAgo;
-    const randomEmail = baseEmails[i % baseEmails.length];
-    emails.push({
-      email: randomEmail,
-      createdAt: new Date(randomTime).toISOString(),
-    });
-  }
-
-  return emails.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-};
-
 const ITEMS_PER_PAGE = 10;
 
 export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [loading, setLoading] = useState(false);
-  const [emails] = useState<EmailData[]>(generateDummyEmails());
+  const [emails, setEmails] = useState<EmailData[]>([]);
+  const [emailsLoading, setEmailsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [copySuccess, setCopySuccess] = useState(false);
   const router = useRouter();
+
+  // Fetch emails from API
+  useEffect(() => {
+    const fetchEmails = async () => {
+      try {
+        setEmailsLoading(true);
+        const response = await fetch("/api/admin/emails");
+        if (response.ok) {
+          const data = await response.json();
+          setEmails(data.emails || []);
+        } else {
+          console.error("Failed to fetch emails");
+        }
+      } catch (error) {
+        console.error("Error fetching emails:", error);
+      } finally {
+        setEmailsLoading(false);
+      }
+    };
+
+    fetchEmails();
+  }, []);
 
   // Calculate pagination
   const totalPages = Math.ceil(emails.length / ITEMS_PER_PAGE);
@@ -253,46 +244,52 @@ export default function AdminDashboard({ onLogout }: AdminDashboardProps) {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left" style={{ tableLayout: "auto" }}>
-              <colgroup>
-                <col style={{ width: "auto" }} />
-                <col style={{ width: "1fr" }} />
-                <col style={{ width: "auto" }} />
-              </colgroup>
-              <thead>
-                <tr className="border-b border-[#C7C7C6]">
-                  <th className="text-left py-3 px-3 font-semibold text-[14px] md:text-[16px] text-[#1d1d1b] whitespace-nowrap">
-                    #
-                  </th>
-                  <th className="text-left py-3 px-3 font-semibold text-[14px] md:text-[16px] text-[#1d1d1b]">
-                    Email
-                  </th>
-                  <th className="text-right py-3 px-3 font-semibold text-[14px] md:text-[16px] text-[#1d1d1b] whitespace-nowrap">
-                    Created Date
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentEmails.map((item, index) => (
-                  <tr
-                    key={startIndex + index}
-                    className="border-b border-[#C7C7C6]/50 hover:bg-[#F4F4FF]/30 transition-colors"
-                  >
-                    <td className="py-3 px-3 text-[14px] md:text-[16px] text-[#1d1d1b]/70 whitespace-nowrap">
-                      {startIndex + index + 1}
-                    </td>
-                    <td className="py-3 px-3 text-[14px] md:text-[16px] text-[#1d1d1b]">
-                      {item.email}
-                    </td>
-                    <td className="py-3 px-3 text-[14px] md:text-[16px] text-[#1d1d1b]/70 whitespace-nowrap text-right">
-                      {formatDate(item.createdAt)}
-                    </td>
+          {emailsLoading ? (
+            <div className="py-12 text-center text-[#1d1d1b]/70">Loading emails...</div>
+          ) : emails.length === 0 ? (
+            <div className="py-12 text-center text-[#1d1d1b]/70">No emails found.</div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left" style={{ tableLayout: "auto" }}>
+                <colgroup>
+                  <col style={{ width: "auto" }} />
+                  <col style={{ width: "1fr" }} />
+                  <col style={{ width: "auto" }} />
+                </colgroup>
+                <thead>
+                  <tr className="border-b border-[#C7C7C6]">
+                    <th className="text-left py-3 px-3 font-semibold text-[14px] md:text-[16px] text-[#1d1d1b] whitespace-nowrap">
+                      #
+                    </th>
+                    <th className="text-left py-3 px-3 font-semibold text-[14px] md:text-[16px] text-[#1d1d1b]">
+                      Email
+                    </th>
+                    <th className="text-right py-3 px-3 font-semibold text-[14px] md:text-[16px] text-[#1d1d1b] whitespace-nowrap">
+                      Created Date
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {currentEmails.map((item, index) => (
+                    <tr
+                      key={startIndex + index}
+                      className="border-b border-[#C7C7C6]/50 hover:bg-[#F4F4FF]/30 transition-colors"
+                    >
+                      <td className="py-3 px-3 text-[14px] md:text-[16px] text-[#1d1d1b]/70 whitespace-nowrap">
+                        {startIndex + index + 1}
+                      </td>
+                      <td className="py-3 px-3 text-[14px] md:text-[16px] text-[#1d1d1b]">
+                        {item.email}
+                      </td>
+                      <td className="py-3 px-3 text-[14px] md:text-[16px] text-[#1d1d1b]/70 whitespace-nowrap text-right">
+                        {formatDate(item.createdAt)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
           {emails.length > ITEMS_PER_PAGE && (
             <div className="mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#1d1d1b]/70">
