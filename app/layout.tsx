@@ -92,7 +92,7 @@ export default function RootLayout({
       lang="en"
       className="bg-[radial-gradient(118.69%_85.24%_at_50%_25.2%,_#F4F4FF_0%,_#FFF_58.08%,_#F4F4FF_84.05%)]"
     >
-      <body className={`${poppins.variable} ${roboto.variable} antialiased  h-full`}>
+      <body className={`${poppins.variable} ${roboto.variable} antialiased h-full`}>
         {children}
       </body>
     </html>
