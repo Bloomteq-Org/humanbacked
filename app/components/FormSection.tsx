@@ -113,7 +113,7 @@ lg:text-[#1D1D1B] lg:text-center  lg:text-[22px] lg:font-medium lg:leading-[34px
       >
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-[12px] w-full max-w-[600px]"
+          className="flex flex-col items-center gap-[24px] w-full max-w-[600px]"
         >
           <Input
             value={email}
@@ -143,7 +143,7 @@ lg:text-[#1D1D1B] lg:text-center  lg:text-[22px] lg:font-medium lg:leading-[34px
         )}
 
         {!message && (
-          <p className="font-roboto text-[#1D1D1B] text-[16px] font-medium leading-[20px]">
+          <p className="font-roboto text-[#1D1D1B] text-[14px] font-medium leading-[20px]">
             No spam, just human updates that matter.
           </p>
         )}

@@ -2,11 +2,16 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import logo from "@/public/LogoV2.svg";
-import Countdown from "./Countdown";
 import Button from "./Button";
 import Link from "next/link";
+
+// Lazy load Countdown since it's only visible on desktop and not critical
+const Countdown = dynamic(() => import("./Countdown"), {
+  ssr: false, // No need for SSR since it's client-only interactive component
+});
 
 const gradientText = "bg-clip-text text-transparent bg-gradient-to-r from-[#0c3ddf] to-[#b748be]";
 

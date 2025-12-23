@@ -35,15 +35,13 @@ const HeroCounterDescription = ({
     >
       {leadingSlot}
       <div className={`flex w-full flex-col gap-[16px] max-w-[960px] ${alignment}`}>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          className={`font-bold text-[36px] md:text-[48px] lg:text-[56px] lg:leading-[69px] leading-[42px] md:leading-[56px] tracking-[-0.72px] md:tracking-[-1.44px] text-[#1d1d1b]`}
+        {/* LCP element - use CSS animation instead of JS to eliminate render delay */}
+        <p
+          className={`font-bold text-[36px] md:text-[48px] lg:text-[56px] lg:leading-[69px] leading-[42px] md:leading-[56px] tracking-[-0.72px] md:tracking-[-1.44px] text-[#1d1d1b] animate-fade-in-up`}
         >
           {title}
           {titleHighlight ? <span className={gradientText}>{titleHighlight}</span> : null}
-        </motion.p>
+        </p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

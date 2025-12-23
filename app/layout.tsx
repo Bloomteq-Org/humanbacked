@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
+// Optimize: Only preload critical weight (400) for faster initial load
 const poppins = localFont({
   variable: "--font-poppins",
   display: "swap",
@@ -16,16 +17,17 @@ const poppins = localFont({
   ],
 });
 
+// Optimize: Load Roboto with optional display to prevent render blocking
 const roboto = Roboto({
   variable: "--font-roboto",
-  display: "swap",
+  display: "optional", // Use optional to prevent render blocking - will use fallback if font not loaded
   weight: ["400", "500", "700"],
   subsets: ["latin"],
   fallback: ["Inter", "system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://humanbacked.vercel.app"),
+  metadataBase: new URL("https://www.humanbacked.com"),
   title: {
     default: "HumanBacked – In a world filled with digital voices and faces, being human matters",
     template: "%s | HumanBacked",

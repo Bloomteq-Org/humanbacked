@@ -1,14 +1,34 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Header from "./components/Header";
-import Divider from "./components/Divider";
 import HeroCounterDescription from "./components/HeroCounterDescription";
-import ImageMarquee from "./components/ImageMarquee";
-import RealSection from "./components/RealSection";
-import Logo from "./components/Logo";
-import HumanBacked from "./components/HumaBacked";
-import NewSection from "./components/NewSection";
-import FormSection from "./components/FormSection";
-import Footer from "./components/Footer";
+
+// Lazy load below-the-fold components to reduce initial bundle size
+const ImageMarquee = dynamic(() => import("./components/ImageMarquee"), {
+  loading: () => <div className="h-[400px] w-full" />, // Placeholder to prevent layout shift
+});
+
+const RealSection = dynamic(() => import("./components/RealSection"), {
+  loading: () => <div className="h-[500px] w-full" />,
+});
+
+const Divider = dynamic(() => import("./components/Divider"));
+
+const Logo = dynamic(() => import("./components/Logo"));
+
+const HumanBacked = dynamic(() => import("./components/HumaBacked"), {
+  loading: () => <div className="h-[400px] w-full" />,
+});
+
+const NewSection = dynamic(() => import("./components/NewSection"), {
+  loading: () => <div className="h-[500px] w-full" />,
+});
+
+const FormSection = dynamic(() => import("./components/FormSection"), {
+  loading: () => <div className="h-[300px] w-full" />,
+});
+
+const Footer = dynamic(() => import("./components/Footer"));
 
 export const metadata: Metadata = {
   title: "HumanBacked – In a world filled with digital voices and faces, being human matters",
@@ -34,12 +54,12 @@ export const metadata: Metadata = {
     title: "HumanBacked | Trust Layer for Real Humans",
     description:
       "HumanBacked is building the trust layer for the AI era, where verified creators can be trusted, celebrated, and financially rewarded for real human content.",
-    url: "https://humanbacked.vercel.app",
+    url: "https://www.humanbacked.com",
     siteName: "HumanBacked",
     type: "website",
     images: [
       {
-        url: "/LogoV2.svg",
+        url: "/Artist2.png",
         width: 1200,
         height: 630,
         alt: "HumanBacked | Trust Layer for Real Humans",
@@ -51,7 +71,7 @@ export const metadata: Metadata = {
     title: "HumanBacked | In a world filled with digital voices and faces, being human matters.",
     description:
       "HumanBacked is building the trust layer for the AI era, where verified creators can be trusted, celebrated, and financially rewarded for real human content.",
-    images: ["/LogoV2.svg"],
+    images: ["/Artist2.png"],
   },
 };
 

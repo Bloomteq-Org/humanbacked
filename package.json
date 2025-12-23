@@ -8,6 +8,21 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "browserslist": {
+    "production": [
+      "chrome >= 92",
+      "firefox >= 91",
+      "safari >= 14.1",
+      "edge >= 92",
+      "not ie 11",
+      "not dead"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "framer-motion": "^12.23.26",
     "next": "16.0.8",
