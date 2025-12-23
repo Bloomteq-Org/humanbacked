@@ -27,9 +27,7 @@ const getEmailHtml = () => `
 
         <!-- Email Content -->
         <div style="text-align: left; max-width: 500px; margin: 0 auto;">
-          <h1 style="font-size: 24px; font-weight: 600; margin-bottom: 24px; color: #1d1d1b; text-align: center;">
-            You're on the waitlist 🎉
-        </h1>
+         
           
           <p style="font-size: 16px; margin-bottom: 16px; color: #1d1d1b; line-height: 1.6;">
             Hi there,
