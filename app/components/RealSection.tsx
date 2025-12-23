@@ -129,10 +129,9 @@ const ImageShowcase = () => {
               alt={avatar.name || `Avatar ${avatar.id}`}
               fill
               className="object-cover"
-              priority={index < 3}
-              loading={index < 3 ? "eager" : "lazy"}
+              loading="lazy"
+              quality={75}
               sizes="(max-width: 768px) 116px, (max-width: 1024px) 212px, 220px"
-              unoptimized
             />
           </motion.div>
         );
